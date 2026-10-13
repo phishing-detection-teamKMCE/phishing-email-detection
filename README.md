@@ -60,4 +60,4 @@ requirements.txt
 Python, PyTorch, Hugging Face Transformers, scikit-learn, Optuna, Gradio.
 
 ## Author
-gufrananas23@gmail.com
+Gufran Anas | LinkedIn: <tumhara-link> | gufrananas23@gmail.com
