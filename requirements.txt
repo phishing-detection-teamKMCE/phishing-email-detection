@@ -3,7 +3,7 @@ transformers
 scikit-learn
 pandas
 numpy
-optuna
-lime
+joblib
 gradio
+optuna
 matplotlib

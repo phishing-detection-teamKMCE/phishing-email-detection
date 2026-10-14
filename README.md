@@ -48,16 +48,52 @@ Of 53 errors for the best seed (31 false positives, 22 false negatives), false p
 - The training set still contains some duplicates and "empty" rows; only the evaluation data was cleaned.
 - The demo is a research prototype, not a security product.
 
+## How to run
+Python 3.10+ is needed.
+
+```bash
+git clone https://github.com/phishing-detection-teamKMCE/phishing-email-detection
+cd phishing-email-detection
+pip install -r requirements.txt
+```
+
+1. Download the dataset from Kaggle (link above) and put `Phishing_Email.csv` in the `data/` folder.
+2. Train a model. Pick one:
+   - **Fast, CPU, about a minute:** `python -m src.baseline` (TF-IDF + SVM, about 98.6% accuracy)
+   - **Full hybrid model, needs a GPU (Google Colab T4, about 40 minutes):** `python -m src.train`
+     Ablations: `python -m src.train --no-attn`, `--no-cnn`, `--no-gru`. Other seeds: `--seed 43`.
+3. Try it:
+   - Command line: `python -m src.predict "Dear customer, verify your password now"`
+   - Web demo: `python app.py`, then open http://127.0.0.1:7860
+
+The demo and `predict` use `model.pt` (hybrid) if it exists, otherwise `baseline.joblib`.
+Trained weights are not stored in the repo because they are over 250 MB.
+
+Running on Google Colab: set Runtime to T4 GPU, upload the repo and the CSV, then run
+`!pip install -r requirements.txt` and `!python -m src.train --data Phishing_Email.csv`.
+
+Note: `src/data.py` cleans first (removes blank and duplicate emails) and then splits 60/20/20,
+so a fresh run gives numbers close to, but not identical with, the table above. The table comes from the
+original experiment notebook.
+
 ## Repository structure
 ```
-notebooks/   experiment notebook (Colab)
-results/     metrics CSVs
-space/       demo app code (app.py, requirements.txt)
-requirements.txt
+src/
+  config.py     settings and the best Optuna hyperparameters
+  data.py       load, clean, split
+  model.py      DistilBERT + attention + CNN + BiGRU hybrid
+  train.py      training and evaluation (supports ablations)
+  baseline.py   TF-IDF + SVM baseline
+  predict.py    load a trained model and score text
+app.py          Gradio demo with sentence-level highlights
+notebooks/      original Colab experiment notebook
+results/        metrics CSVs
+notes/          daily progress notes
+data/           put the Kaggle CSV here (not tracked)
 ```
 
 ## Tech stack
 Python, PyTorch, Hugging Face Transformers, scikit-learn, Optuna, Gradio.
 
 ## Author
-Gufran Anas | LinkedIn: <tumhara-link> | gufrananas23@gmail.com
+Gufran Anas, gufrananas23@gmail.com
