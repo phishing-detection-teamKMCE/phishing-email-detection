@@ -69,8 +69,33 @@ pip install -r requirements.txt
 The demo and `predict` use `model.pt` (hybrid) if it exists, otherwise `baseline.joblib`.
 Trained weights are not stored in the repo because they are over 250 MB.
 
-Running on Google Colab: set Runtime to T4 GPU, upload the repo and the CSV, then run
-`!pip install -r requirements.txt` and `!python -m src.train --data Phishing_Email.csv`.
+### Running on Google Colab (tested)
+Set Runtime to T4 GPU, then:
+```python
+!git clone https://github.com/phishing-detection-teamKMCE/phishing-email-detection
+%cd phishing-email-detection
+!pip install -q -r requirements.txt
+# upload Phishing_Email.csv into the data/ folder, then:
+!python -m src.baseline          # about 1 minute
+!python -m src.train             # about 7 minutes on a T4
+!python -m src.predict "Dear customer, verify your password now"
+```
+To open the web demo from Colab:
+```python
+import app
+app.demo.launch(share=True)      # prints a public gradio.live link
+```
+(`!python app.py` does not work on Colab because the local link is not reachable from your browser.)
+
+### Reproduced results
+A fresh run of the commands above (cleaned data, 60/20/20 split, 3,505 test emails):
+
+| Model | Accuracy | Precision | Recall | F1 | ROC-AUC |
+|---|---|---|---|---|---|
+| TF-IDF + SVM (`src.baseline`) | 0.9849 | 0.9794 | 0.9801 | 0.9798 | 0.9986 |
+| Hybrid (`src.train`, seed 42) | 0.9866 | 0.9702 | 0.9947 | 0.9823 | 0.9987 |
+
+Both are about 98.5% accurate, so the earlier conclusion holds: the dataset is close to saturated.
 
 Note: `src/data.py` cleans first (removes blank and duplicate emails) and then splits 60/20/20,
 so a fresh run gives numbers close to, but not identical with, the table above. The table comes from the
