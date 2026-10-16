@@ -18,6 +18,9 @@ Two data-quality problems were found and fixed for the final evaluation:
 
 The final test set has 3,444 emails with no blanks, no duplicates and no overlap with train or validation.
 
+## Demo
+![Demo](docs/demo.png)
+
 ## Results (cleaned test set, 3,444 emails)
 | Model | Accuracy | Precision | Recall | F1 | ROC-AUC |
 |---|---|---|---|---|---|
@@ -113,6 +116,7 @@ src/
 app.py          Gradio demo with sentence-level highlights
 notebooks/      original Colab experiment notebook
 results/        metrics CSVs
+docs/           demo screenshot
 notes/          daily progress notes
 data/           put the Kaggle CSV here (not tracked)
 ```
