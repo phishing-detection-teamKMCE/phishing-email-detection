@@ -20,6 +20,7 @@ The final test set has 3,444 emails with no blanks, no duplicates and no overlap
 
 ## Demo
 ![Demo](docs/demo.png)
+![Demo 2](docs/demo2.png)
 
 ## Results (cleaned test set, 3,444 emails)
 | Model | Accuracy | Precision | Recall | F1 | ROC-AUC |
