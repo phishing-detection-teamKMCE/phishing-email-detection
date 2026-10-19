@@ -22,6 +22,11 @@ The final test set has 3,444 emails with no blanks, no duplicates and no overlap
 ![Demo](docs/demo.png)
 ![Demo 2](docs/demo2.png)
 
+### Try it online
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/phishing-detection-teamKMCE/phishing-email-detection/blob/main/demo.ipynb)
+
+Click the badge, then Runtime -> Run all. It downloads the trained model from the GitHub release and prints a public link to the web demo. No setup or GPU is needed.
+
 ## Results (cleaned test set, 3,444 emails)
 | Model | Accuracy | Precision | Recall | F1 | ROC-AUC |
 |---|---|---|---|---|---|
@@ -64,7 +69,7 @@ pip install -r requirements.txt
 1. Download the dataset from Kaggle (link above) and put `Phishing_Email.csv` in the `data/` folder.
 2. Train a model. Pick one:
    - **Fast, CPU, about a minute:** `python -m src.baseline` (TF-IDF + SVM, about 98.6% accuracy)
-   - **Full hybrid model, needs a GPU (Google Colab T4, about 40 minutes):** `python -m src.train`
+   - **Full hybrid model, needs a GPU (Google Colab T4, about 7 minutes):** `python -m src.train`
      Ablations: `python -m src.train --no-attn`, `--no-cnn`, `--no-gru`. Other seeds: `--seed 43`.
 3. Try it:
    - Command line: `python -m src.predict "Dear customer, verify your password now"`
@@ -117,7 +122,8 @@ src/
 app.py          Gradio demo with sentence-level highlights
 notebooks/      original Colab experiment notebook
 results/        metrics CSVs
-docs/           demo screenshot
+docs/           demo screenshots
+demo.ipynb      one-click Colab demo
 notes/          daily progress notes
 data/           put the Kaggle CSV here (not tracked)
 ```
