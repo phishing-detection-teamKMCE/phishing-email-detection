@@ -27,6 +27,9 @@ The final test set has 3,444 emails with no blanks, no duplicates and no overlap
 
 Click the badge, then Runtime -> Run all. It downloads the trained model from the GitHub release and prints a public link to the web demo. No setup or GPU is needed.
 
+### Website
+A notebook-style website lives in `docs/` (hosted free on GitHub Pages). It scores emails in the browser with the light TF-IDF model and highlights the words that pushed the verdict. Users can sign up, log in, keep a scan history in a database and back it up. Setup steps are in [WEBSITE_SETUP.md](WEBSITE_SETUP.md).
+
 ## Results (cleaned test set, 3,444 emails)
 | Model | Accuracy | Precision | Recall | F1 | ROC-AUC |
 |---|---|---|---|---|---|
@@ -119,11 +122,14 @@ src/
   train.py      training and evaluation (supports ablations)
   baseline.py   TF-IDF + SVM baseline
   predict.py    load a trained model and score text
+  export_web.py train the light model and export it for the website
 app.py          Gradio demo with sentence-level highlights
 notebooks/      original Colab experiment notebook
 results/        metrics CSVs
-docs/           demo screenshots
+docs/           website (HTML, CSS, JS) and demo screenshots
 demo.ipynb      one-click Colab demo
+supabase_schema.sql  database tables for the website
+WEBSITE_SETUP.md     how to set up the website
 notes/          daily progress notes
 data/           put the Kaggle CSV here (not tracked)
 ```
